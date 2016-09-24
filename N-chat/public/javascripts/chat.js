@@ -23,6 +23,8 @@ $(document).ready(function() {
     flushUsers(data.users);
     //显示正在对谁说话
     showSayTo();
+    //滚动条保持底部
+    keepBottom();
   });
 
   socket.on('say', function (data) {
@@ -48,6 +50,8 @@ $(document).ready(function() {
         alert('浏览器不支持桌面通知～！');
       }
     }
+    //滚动条保持底部
+    keepBottom();
   });
 
   socket.on('offline', function (data) {
@@ -62,6 +66,8 @@ $(document).ready(function() {
     }
     //显示正在对谁说话
     showSayTo();
+    //滚动条保持底部
+    keepBottom();
   });
 
   //服务器关闭
@@ -69,6 +75,8 @@ $(document).ready(function() {
     var sys = '<li class="otherMsg">系统:连接服务器失败！</li>';
     $(".chat-thread").append(sys + "<br/>");
     $("#list").empty();
+    //滚动条保持底部
+    keepBottom();
   });
 
   //重新启动服务器
@@ -76,6 +84,8 @@ $(document).ready(function() {
     var sys = '<li class="otherMsg">系统:重新连接服务器！</li>';
     $(".chat-thread").append(sys + "<br/>");
     socket.emit('online', {user: from});
+    //滚动条保持底部
+    keepBottom();
   });
 
   //刷新用户在线列表
@@ -114,21 +124,28 @@ $(document).ready(function() {
     var time = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + ' ' + date.getHours() + ':' + (date.getMinutes() < 10 ? ('0' + date.getMinutes()) : date.getMinutes()) + ":" + (date.getSeconds() < 10 ? ('0' + date.getSeconds()) : date.getSeconds());
     return time;
   }
-
+  //始终让滚动条保持底部
+  function keepBottom(){
+    $('#contents')[0].scrollTop=$('#contents')[0].scrollHeight;
+  }
   //发话
   $("#say").click(function() {
     //获取要发送的信息
-    var $msg = $("#input_content").html();
+
+    var $msg = $("#text").val();
+
     if ($msg == "") return;
-    //把发送的信息先添加到自己的浏览器 DOM 中
+    //把发送的信息先添加到自己的浏览器 DOM 中,
     if (to == "all") {
       $(".chat-thread").append('<li class="yourMsg">你(' + now() + ')对 所有人 说：<br/>' + $msg + '</li>');
     } else {
       $(".chat-thread").append('<li class="yourMsg" >你(' + now() + ')对 ' + to + ' 说：<br/>' + $msg + '</li>');
     }
-    //发送发话信息
+    //滚动条保持底部
+    keepBottom();
+    //发送发话信息，这块我写的不好，不知该怎么验证是否发送成功，回调？但是百度没发现好的解决方案。
     socket.emit('say', {from: from, to: to, msg: $msg});
     //清空输入框并获得焦点
-    $("#input_content").html("").focus();
+    KindEditor.instances[0].html("");
   });
 });

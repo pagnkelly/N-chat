@@ -3,10 +3,7 @@
 <head>
 <meta charset="utf-8">
 <title>聊天室</title>
-<script type="text/javascript" src="javascripts/jquery.min.js"></script>
-<script type="text/javascript" src="javascripts/jquery.cookie.js"></script>
-<script src="/socket.io/socket.io.js"></script>
-<script type="text/javascript" src="javascripts/chat.js"></script>
+
 <link type="text/css" rel="stylesheet" href="stylesheets/common.css">
 <link type="text/css" rel="stylesheet" href="stylesheets/chat.css">
 </head>
@@ -21,7 +18,10 @@
       </div>
       <div id="content_saying">
         <div id="toolbar"></div>
-        <div id="input_content" contenteditable="true"></div>
+        <div id="input_content" >
+          <textarea rows="2" id="text" placeholder="请使用富文本编辑插件" name="content"></textarea>
+        </div>
+
         <div id="sayingto">你好 <span id="from"></span> ，你正在对 <span id="to"></span> 说</div>
         <div id="say">发送</div>
       </div>
@@ -35,5 +35,24 @@
       </div>
     </div>
   </div>
+  <script type="text/javascript" src="kindeditor/kindeditor-min.js"></script>
+  <script type="text/javascript" src="javascripts/jquery.min.js"></script>
+  <script type="text/javascript" src="javascripts/jquery.cookie.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script type="text/javascript" src="javascripts/chat.js"></script>
+
+  <script>
+    KindEditor.ready(function(K) {
+      K.create('textarea[name="content"]', {
+        allowFileManager : true,
+        width:"100%",
+        height:"100%",
+        afterBlur:function(){
+          this.sync();
+        }
+      });
+
+    });
+  </script>
 </body>
 </html>

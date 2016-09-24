@@ -84,6 +84,7 @@ io.sockets.on('connection', function (socket) {
           //触发该用户客户端的 say 事件
           client.emit('say', data);
         }
+
       });
     }
   });
