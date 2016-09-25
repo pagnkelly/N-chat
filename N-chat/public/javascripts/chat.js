@@ -27,14 +27,48 @@ $(document).ready(function() {
     keepBottom();
   });
 
+
+
+
+
+
+  //图片拖放上传
+  var box=$('body')[0];
+  box.addEventListener('dragover',function(e){
+    e.preventDefault();
+  },false);
+  box.addEventListener('drop',function(e){
+    e.preventDefault();
+    var file= e.dataTransfer.files[0];
+    var reader=new FileReader();
+    reader.onload=function(e){
+
+      var file=this.result;
+
+      if (to == "all") {
+        $(".chat-thread").append('<li class="yourMsg">你(' + now() + ')对 所有人 说：<br/><img   src='+file+'></li>');
+      } else {
+        $(".chat-thread").append('<li class="yourMsg" >你(' + now() + ')对 ' + to + ' 说：<br/><img  src='+file+'></li>');
+      }
+      socket.emit('say',{from: from, to: to,path:file});
+      //滚动条保持底部
+      keepBottom();
+    }
+    reader.readAsDataURL(file);
+  },false);
+
+  //分隔线
   socket.on('say', function (data) {
+    //判断内容是文字还是图片并付给inner
+    var inner=data.msg?data.msg:"<img src="+data.path+">";
     //对所有人说
     if (data.to == 'all') {
-      $(".chat-thread").append('<li class="otherMsg">' + data.from + '(' + now() + ')对 所有人 说：<br/>' + data.msg + '</li>');
+
+      $(".chat-thread").append('<li class="otherMsg">' + data.from + '(' + now() + ')对 所有人 说：<br/>' +inner+'</li>');
     }
     //对你密语
     if (data.to == from) {
-      $(".chat-thread").append('<li class="otherMsg" >' + data.from + '(' + now() + ')对 你 说：<br/>' + data.msg + '</li>');
+      $(".chat-thread").append('<li class="otherMsg" >' + data.from + '(' + now() + ')对 你 说：<br/>' +inner +'</li>');
 
       //虽然我添加了这个功能，但是貌似浏览器支持度不高，都说chrome好使，是28以后的，但是最新版chrome因为使用的人太少去掉了。
       //从网上搜了那种引入js的我也试了，也不好使。只能针对特别用户
@@ -143,7 +177,7 @@ $(document).ready(function() {
     }
     //滚动条保持底部
     keepBottom();
-    //发送发话信息，这块我写的不好，不知该怎么验证是否发送成功，回调？但是百度没发现好的解决方案。
+    //发送发话信息，这块我写的不好，没有做验证是否发送成功。
     socket.emit('say', {from: from, to: to, msg: $msg});
     //清空输入框并获得焦点
     KindEditor.instances[0].html("");

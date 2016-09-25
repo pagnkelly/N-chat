@@ -71,6 +71,7 @@ io.sockets.on('connection', function (socket) {
 
   //有人发话
   socket.on('say', function (data) {
+
     if (data.to == 'all') {
       //向其他所有用户广播该用户发话信息
       socket.broadcast.emit('say', data);
