@@ -10,7 +10,6 @@ N-chat
         广播聊天，用户列表查看。当然我想到了好多好多功能，视频，语音，远程操控，公共文件夹（我不是再说某讯）；实力原因，仅供学习。
 
 
-
         废话不多说先上几个图！！！！
         ![](https://github.com/pagnkelly/N-chat/raw/master/N-chat/public/images/1.png)
         ![](https://github.com/pagnkelly/N-chat/raw/master/N-chat/public/images/2.png)
