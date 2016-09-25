@@ -12,10 +12,10 @@ N-chat
 
 
         废话不多说先上几个图！！！！
-        ![](https://github.com/pagnkelly/N-chat/N-chat/raw/master/public/images/1.png)
-        ![](https://github.com/pagnkelly/N-chat/N-chat/raw/master/N-chat/public/images/2.png)
-        ![](https://github.com/pagnkelly/N-chat/N-chat/raw/master/N-chat/public/images/3.png)
-        ![](https://github.com/pagnkelly/N-chat/N-chat/raw/master/N-chat/public/images/4.png)
+        ![](https://github.com/pagnkelly/N-chat/raw/master/N-chat/public/images/1.png)
+        ![](https://github.com/pagnkelly/N-chat/raw/master/N-chat/public/images/2.png)
+        ![](https://github.com/pagnkelly/N-chat/raw/master/N-chat/public/images/3.png)
+        ![](https://github.com/pagnkelly/N-chat/raw/master/N-chat/public/images/4.png)
         期间图片拖拽上传遇到问题，在这里得以解决https://segmentfault.com/q/1010000002885157
 ######package.json
 
